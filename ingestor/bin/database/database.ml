@@ -8,7 +8,8 @@ exception JsonParsingException of string
 type metric = {
   timestamp: int64;
   temperature: float;
-  humidity: float;
+  humidity: int;
+  battery: float;
   sensor: string;
 }
 
@@ -41,21 +42,24 @@ let must_parse fields key func = match func fields key with
 let metric_of_fields (fields: (string * Yojson.Safe.t) list) =
   let sens = must_parse fields "sensor" json_string in
   let temp = must_parse fields "temperature" json_float  in
-  let hum = must_parse fields "humidity" json_float  in
+  let hum = must_parse fields "humidity" json_int in
+  let bat = must_parse fields "battery" json_float in
   let ts = must_parse fields "timestamp" json_int in
   let ts = Int64.of_int ts in
   Some ({
     timestamp=ts;
     temperature=temp;
+    battery=bat;
     humidity=hum;
     sensor=sens;
   })
 
 let string_of_metric metric = 
-  Printf.sprintf "airSensorsOcaml,sensord_id=%s temperature=%f,humidity=%f %Ld" 
+  Printf.sprintf "airSensorsOcaml,sensord_id=%s temperature=%f,humidity=%d,battery=%f %Ld" 
     metric.sensor 
     metric.temperature 
     metric.humidity 
+    metric.battery
     metric.timestamp
 
 let push_metric metric =
