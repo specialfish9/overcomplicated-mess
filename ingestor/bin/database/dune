@@ -1,0 +1,3 @@
+(library
+ (name database)
+ (libraries ocm appconf yojson cohttp-lwt-unix cohttp-async))

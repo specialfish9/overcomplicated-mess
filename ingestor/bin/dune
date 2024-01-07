@@ -1,0 +1,4 @@
+(executable
+ (public_name ocm)
+ (name main)
+ (libraries ocm appconf http_handler database routes cohttp-lwt-unix cohttp-async))
