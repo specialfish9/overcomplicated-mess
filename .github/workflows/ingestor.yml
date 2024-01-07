@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Ingestor Docker image
 
 env:
   DOCKER_IMAGE: ocm-ingestor
@@ -24,10 +24,12 @@ jobs:
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
     - name: docker login
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PWD
+    - name: change directory
+      run: cd ingestor
     - name: Build and push Docker images
       uses: docker/build-push-action@v5.0.0
       with:
-        file: ./ingestor/Dockerfile
+        file: Dockerfile
         push: true
         tags: |
           ${{ env.DOCKER_USER }}/${{ env.DOCKER_IMAGE }}:latest
