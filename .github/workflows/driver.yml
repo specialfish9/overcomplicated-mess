@@ -25,11 +25,5 @@ jobs:
     - name: docker login
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PWD
     - name: Build and push Docker images
-      uses: docker/build-push-action@v5.0.0
-      with:
-        context: ./driver
-        file: ./Dockerfile
-        push: true
-        tags: |
-          ${{ env.DOCKER_USER }}/${{ env.DOCKER_IMAGE }}:latest
-          ${{ env.DOCKER_USER }}/${{ env.DOCKER_IMAGE }}:${{ steps.date.outputs.date }}
+      working-directory: driver
+      run: docker build --push -t ${{ env.DOCKER_USER }}/${{ env.DOCKER_IMAGE }}:latest -t ${{ env.DOCKER_USER }}/${{ env.DOCKER_IMAGE }}:${{ steps.date.outputs.date }} .
