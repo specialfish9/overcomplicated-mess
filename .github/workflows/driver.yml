@@ -14,7 +14,7 @@ on:
     
 defaults:
   run:
-    working-directory: ./driver
+    working-directory: driver
 
 
 jobs:
