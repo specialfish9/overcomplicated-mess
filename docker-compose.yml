@@ -21,8 +21,8 @@ services:
   driver:
     container_name: driver
     image: specialfish9/ocm-driver
-    networks:
-      - metrics
+    network_mode: host
+    privileged: true
     volumes:
       - ./driver/config.yaml:/app/config/config.yaml
     depends_on:

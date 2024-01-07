@@ -45,7 +45,7 @@ def task(devices, server_url):
     for device in devices:
         data = read_values(device['address'])
         data["sensor"]="xiaomi-" + device['address']
-        data["timestamp"]=int(datetime.now().timestamp() * 1000000)
+        data["timestamp"]=int(datetime.now().timestamp() * 1000000000)
         print(dumps(data))
         try:
             session = requests.session()
