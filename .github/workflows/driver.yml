@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Driver Docker Image
 
 env:
   DOCKER_IMAGE: ocm-driver
@@ -24,6 +24,8 @@ jobs:
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
     - name: docker login
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PWD
+    - name: Change directory
+      run: cd driver
     - name: Build and push Docker images
       uses: docker/build-push-action@v5.0.0
       with:
