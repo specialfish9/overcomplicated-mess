@@ -1,0 +1,6 @@
+port: 9093
+server_url: http://localhost:8000/test
+devices:
+  - name: workroom
+    address: A4:C1:38:CC:66:F8
+
