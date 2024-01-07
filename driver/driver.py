@@ -5,6 +5,8 @@ import yaml
 from yaml.parser import ParserError
 from yaml.loader import SafeLoader
 from bluepy import btle
+from json import dumps
+from datetime import datetime
 
 class MyDelegate(btle.DefaultDelegate):
     def __init__(self):
@@ -42,10 +44,13 @@ def read_values(mac):
 def task(devices, server_url):
     for device in devices:
         data = read_values(device['address'])
+        data["sensor"]="xiaomi-" + device['address']
+        data["timestamp"]=int(datetime.now().timestamp() * 1000000)
+        print(dumps(data))
         try:
             session = requests.session()
-            response = session.post(server_url, data)
-            if response.status_code != 200:
+            response = session.post(server_url, data=dumps(data))
+            if response.status_code >=300:
                 print("Error posting data to", server_url, ": ", response.status_code, str(response.content))
         except requests.exceptions.RequestException as err:
                 print("Error posting data to", server_url, ": ", err)

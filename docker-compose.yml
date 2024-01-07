@@ -18,6 +18,15 @@ services:
     env_file: ./ingestor/.env
     depends_on:
       - influx
+  driver:
+    container_name: driver
+    image: specialfish9/ocm-driver
+    networks:
+      - metrics
+    volumes:
+      - ./driver/config.yaml:/app/config/config.yaml
+    depends_on:
+      - ingestor
 
 networks:
   metrics:
