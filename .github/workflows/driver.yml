@@ -11,21 +11,21 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+    
+defaults:
+  run:
+    working-directory: ./driver
+
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - name: Get current date
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
     - name: docker login
       run: docker login -u $DOCKER_USERNAME -p $DOCKER_PWD
-    - name: info
-      run: pwd && ls -la
     - name: Build and push Docker images
       working-directory: driver
       run: docker build --push -t ${{ env.DOCKER_USER }}/${{ env.DOCKER_IMAGE }}:latest -t ${{ env.DOCKER_USER }}/${{ env.DOCKER_IMAGE }}:${{ steps.date.outputs.date }} .
