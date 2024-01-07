@@ -52,7 +52,7 @@ let metric_of_fields (fields: (string * Yojson.Safe.t) list) =
   })
 
 let string_of_metric metric = 
-  Printf.sprintf "airSensorsOcaml,sensord_id=%s temperature=%f,humidity=%f timestamp=%Ld" 
+  Printf.sprintf "airSensorsOcaml,sensord_id=%s temperature=%f,humidity=%f %Ld" 
     metric.sensor 
     metric.temperature 
     metric.humidity 

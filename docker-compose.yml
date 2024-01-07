@@ -1,0 +1,23 @@
+services:
+  influx:
+    container_name: influxdb
+    image: influxdb:2.7.4
+    networks:
+      - metrics
+    ports:
+      - 8086:8086
+    volumes:
+      - ./data:/var/lib/influxdb2
+  ingestor:
+    container_name: ingestor
+    image: specialfish9/ocm-ingestor
+    networks:
+      - metrics
+    ports:
+      - 8000:8000
+    env_file: ./ingestor/.env
+    depends_on:
+      - influx
+
+networks:
+  metrics:
