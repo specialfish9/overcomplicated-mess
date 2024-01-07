@@ -6,4 +6,4 @@ RUN pip install -r requirements.txt
 
 COPY xiaomi_sensor_exporter.py .
 
-ENTRYPOINT ["python", "-u", "xiaomi_sensor_exporter.py", "-c", "/app/config/config.yaml"]
+ENTRYPOINT ["python", "-u", "driver.py", "/app/config/config.yaml"]
